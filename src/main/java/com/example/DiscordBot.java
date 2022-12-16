@@ -15,7 +15,7 @@ public final class DiscordBot {
     private final ShardManager shardManager;
 
     private DiscordBot() throws LoginException {
-        String token = "MTA1MzM2NjE5NDk3NzEzMjYwNQ.GgBk0w.VhsUOIEXvdcuQAEBph-kHGMT2T40UJBtUKjwmk";
+        String token = "YOUR_BOT_TOKEN";
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Vines"));
