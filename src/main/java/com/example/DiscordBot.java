@@ -2,6 +2,7 @@ package com.example;
 
 import javax.security.auth.login.LoginException;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -12,17 +13,36 @@ import net.dv8tion.jda.api.sharding.ShardManager;
  */
 public final class DiscordBot {
 
+    private final Dotenv config;
+
     private final ShardManager shardManager;
 
+    
+    /**
+     * Loads environment variables and builds the bot shard manager.
+     * @throws LoginException occurs when bot token is invalid
+     */
     private DiscordBot() throws LoginException {
-        String token = "YOUR_BOT_TOKEN";
+        config = Dotenv.configure().load();
+        String token = config.get("TOKEN");
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.watching("Vines"));
         shardManager = builder.build();
     }
 
+    /**
+     * Retrieves the bot config to access environment variables
+     * @return the Dotenv instance for the bot
+     */
+    public Dotenv getConfig() {
+       return config; 
+    }
 
+    /**
+     * Retrieves the bot shard manager
+     * @return the ShardManager instance for the bot
+     */
     public ShardManager getShardManager() {
         return shardManager;
     }
